@@ -82,7 +82,7 @@ class FileLogger {
 }
 ```
 
-Now, the responsibilities are clearly separated, adhering to the **Single Responsibility Principle**. We can use these classes together to achieve the desired functionality.
+Now, the **responsibilities are clearly separated**, adhering to the **Single Responsibility Principle**. We can use these classes together to achieve the desired functionality.
 
 ```typescript
 // Example usage
