@@ -51,7 +51,7 @@ Applying the **Open/Closed Principle (OCP)** involves extending the existing fun
 
 ## ✍🏻 Application
 
-Let's create an `ShapeCalculator` interface with methods for both area and perimeter calculations. Then, we'll create concrete implementations for both calculations: `AreaCalculator` and `PerimeterCalculator`. The `Shape` class will be modified to accept a calculator during construction.
+Let's create an `ShapeCalculator` interface with methods for both area and perimeter calculations. The `Shape` class will be modified to accept a calculator during construction.
 
 ```typescript
 /**
@@ -60,32 +60,6 @@ Let's create an `ShapeCalculator` interface with methods for both area and perim
 interface ShapeCalculator {
   calculateArea(): number;
   calculatePerimeter(): number;
-}
-
-/**
- * Concrete implementation for area calculation.
- */
-class AreaCalculator implements ShapeCalculator {
-  calculateArea(): number {
-    throw new Error("Method not implemented.");
-  }
-
-  calculatePerimeter(): number {
-    throw new Error("Method not implemented.");
-  }
-}
-
-/**
- * Concrete implementation for perimeter calculation.
- */
-class PerimeterCalculator implements ShapeCalculator {
-  calculateArea(): number {
-    throw new Error("Method not implemented.");
-  }
-
-  calculatePerimeter(): number {
-    throw new Error("Method not implemented.");
-  }
 }
 
 /**
@@ -138,7 +112,16 @@ class Rectangle extends Shape {
 }
 ```
 
-Now, the `Shape` class is **open for extension** by allowing new calculators to be added **without modifying the existing code**.
+Now, the `Shape` class is **open for extension** by allowing new calculators to be added **without modifying the existing code**. We can then use the respective calculators to calculate the area and perimeter of each shape.
+
+```typescript
+// Example usage
+const circle = new Circle(5);
+const rectangle = new Rectangle(6, 8);
+
+console.log(`Circle Area: ${circle.calculateArea()}`);
+console.log(`Rectangle Perimeter: ${rectangle.calculatePerimeter()}`);
+```
 
 ## ☯️ Pros and Cons
 
