@@ -6,7 +6,7 @@ The **Open/Closed Principle (OCP)** states that a class should be **open for ext
 
 Imagine you are developing a geometric shapes module that initially supports rectangles and circles. Each shape has methods to calculate its area and perimeter. However, as the project progresses, a new shape like a triangle needs to be added.
 
-The initial implementation might involve a single class (`ShapeCalculator`) with methods for calculating the area and perimeter of rectangles and circles. This design makes it **challenging to add new shapes without modifying the existing class**, violating the Open/Closed Principle.
+The initial implementation might involve a single class `ShapeCalculator` with methods for calculating the area and perimeter of rectangles and circles. This design makes it **challenging to add new shapes without modifying the existing class**, violating the Open/Closed Principle.
 
 ```typescript
 class ShapeCalculator {
