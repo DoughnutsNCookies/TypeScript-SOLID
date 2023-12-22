@@ -122,7 +122,7 @@ class Rectangle extends Shape {
 }
 ```
 
-Now, adding new shapes like triangles and ellipses is as simple as creating new subclasses of `Shape` without modifying the existing code.
+Now, adding a new shape like a triangle is as simple as creating new subclasses of `Shape` without modifying the existing code.
 
 ```typescript
 /**
