@@ -6,7 +6,7 @@ The **Single Responsibility Principle (SRP)** focuses on the idea that a class s
 
 Imagine you are working on a file handling module for a project. The module is responsible for reading data from a file, processing it, and then saving the processed data back to a file. However, as the project evolves, new requirements emerge. The file handling module is expected to log every file operation for auditing purposes.
 
-The initial implementation of the module might have methods for reading, processing, and saving data, all bundled together.
+The initial implementation of the module might have methods for reading, processing, and saving data, all bundled together in a single class called `FileHandler` for example.
 
 ```typescript
 class FileHandler {
