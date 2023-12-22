@@ -90,7 +90,7 @@ class Circle extends Shape {
     this.radius = radius;
   }
 
-	calculateArea(): number {
+  calculateArea(): number {
     return Math.PI * this.radius * this.radius;
   }
 
