@@ -4,81 +4,79 @@ The **Open/Closed Principle (OCP)** is a SOLID design principle that states that
 
 ## ❓ Problem
 
-Consider a scenario where you have developed a `Shape` class hierarchy to represent various geometric shapes, such as circles and rectangles. Initially, you provide a method `calculateArea` in the base `Shape` class to compute the area of a shape.
+Imagine you are developing a geometric shapes module that initially supports rectangles and circles. Each shape has methods to calculate its area and perimeter. However, as the project progresses, new shapes like triangles and ellipses need to be added.
 
-Now, a new requirement arises: you need to support the calculation of perimeters for each shape. The conventional approach might involve modifying the existing `Shape` class and **adding a new method**, violating the OCP. Let's consider a scenario where the `Shape` class originally only had an `calculateArea` method:
+The initial implementation might involve a single class (`ShapeCalculator`) with methods for calculating the area and perimeter of rectangles and circles. This design makes it **challenging to add new shapes without modifying the existing class**, violating the Open/Closed Principle.
 
 ```typescript
-class Shape {
-  private radius: number;
-
-  constructor(radius: number) {
-    this.radius = radius;
+class ShapeCalculator {
+  calculateRectangleArea(width: number, height: number): number {
+    return width * height;
   }
 
-  calculateArea(): number {
-    return Math.PI * this.radius * this.radius;
+  calculateRectanglePerimeter(width: number, height: number): number {
+    return 2 * (width + height);
+  }
+
+  calculateCircleArea(radius: number): number {
+    return Math.PI * radius ** 2;
+  }
+
+  calculateCirclePerimeter(radius: number): number {
+    return 2 * Math.PI * radius;
   }
 }
 ```
 
-Now, with the new requirement for calculating perimeters, a common approach might involve **modifying the existing class**:
+Now, with the new requirement for adding a triangle, a common approach might involve **modifying the existing class**:
 
 ```typescript
-// Problematic code violating OCP
-class Shape {
-  private radius: number;
-
-  constructor(radius: number) {
-    this.radius = radius;
+class ShapeCalculator {
+  calculateRectangleArea(width: number, height: number): number {
+    return width * height;
   }
 
-  calculateArea(): number {
-    return Math.PI * this.radius * this.radius;
+  calculateRectanglePerimeter(width: number, height: number): number {
+    return 2 * (width + height);
   }
 
-  calculatePerimeter(): number {
-    return 2 * Math.PI * this.radius;
+  calculateCircleArea(radius: number): number {
+    return Math.PI * radius ** 2;
+  }
+
+  calculateCirclePerimeter(radius: number): number {
+    return 2 * Math.PI * radius;
+  }
+
+  // Violation: Adding a new shape requires modifying the existing class.
+  calculateTriangleArea(base: number, height: number): number {
+    return 0.5 * base * height;
+  }
+
+  // Violation: Adding a new shape requires modifying the existing class.
+  calculateTrianglePerimeter(side1: number, side2: number, side3: number): number {
+    return side1 + side2 + side3;
   }
 }
 ```
 
-This modification **violates the OCP**, as it involves changing the existing `Shape` class **instead of extending it**.
+This modification **violates the OCP**, as it involves changing the existing `ShapeCalculator` class **instead of extending it**.
 
 ## ✅ Solution
 
-Applying the **Open/Closed Principle (OCP)** involves extending the existing functionality without modifying the existing code. In this case, we can introduce an abstraction (`ShapeCalculator`) that defines methods for both area and perimeter calculations. Concrete implementations for area and perimeter calculations can be added without modifying the `Shape` class.
+Applying the **Open/Closed Principle (OCP)** involves designing the system to be **extensible**. In this case, we can create an abstract base class `Shape` with methods for calculating the area and perimeter. Concrete subclasses for each shape (e.g., `Rectangle`, `Circle`, `Triangle`) can then extend the base class, **providing specific implementations for the calculations**.
 
 ## ✍🏻 Application
 
-Let's create an `ShapeCalculator` interface with methods for both area and perimeter calculations. The `Shape` class will be modified to accept a calculator during construction.
+Let's create an abstract class `Shape` with methods for calculating the area and perimeter. We'll then create concrete subclasses for rectangles and circles. Later, we can easily add new shapes without modifying the existing code.
 
 ```typescript
 /**
  * Interface for shape calculations.
  */
-interface ShapeCalculator {
-  calculateArea(): number;
-  calculatePerimeter(): number;
-}
-
-/**
- * Base class representing various geometric shapes.
- */
-class Shape {
-  private calculator: ShapeCalculator;
-
-  constructor(calculator: ShapeCalculator) {
-    this.calculator = calculator;
-  }
-
-  calculateArea(): number {
-    return this.calculator.calculateArea();
-  }
-
-  calculatePerimeter(): number {
-    return this.calculator.calculatePerimeter();
-  }
+abstract class Shape {
+  abstract calculateArea(): number;
+  abstract calculatePerimeter(): number;
 }
 
 /**
@@ -87,12 +85,18 @@ class Shape {
 class Circle extends Shape {
   private radius: number;
 
-  constructor(radius: number, calculator: ShapeCalculator) {
-    super(calculator);
+  constructor(radius: number) {
+		super();
     this.radius = radius;
   }
 
-  // Additional methods and properties specific to circles can be added here.
+	calculateArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+
+  calculatePerimeter(): number {
+    return 2 * Math.PI * this.radius;
+  }
 }
 
 /**
@@ -102,25 +106,59 @@ class Rectangle extends Shape {
   private width: number;
   private height: number;
 
-  constructor(width: number, height: number, calculator: ShapeCalculator) {
-    super(calculator);
+  constructor(width: number, height: number) {
+		super();
     this.width = width;
     this.height = height;
   }
 
-  // Additional methods and properties specific to rectangles can be added here.
+  calculateArea(): number {
+    return this.width * this.height;
+  }
+
+  calculatePerimeter(): number {
+    return 2 * (this.width + this.height);
+  }
 }
 ```
 
-Now, the `Shape` class is **open for extension** by allowing new calculators to be added **without modifying the existing code**. We can then use the respective calculators to calculate the area and perimeter of each shape.
+Now, adding new shapes like triangles and ellipses is as simple as creating new subclasses of `Shape` without modifying the existing code.
+
+```typescript
+/**
+ * Concrete class representing a triangle.
+ */
+class Triangle extends Shape {
+  private base: number;
+  private height: number;
+
+  constructor(base: number, height: number) {
+		super();
+    this.base = base;
+    this.height = height;
+  }
+
+  calculateArea(): number {
+    return 0.5 * this.base * this.height;
+  }
+
+  calculatePerimeter(): number {
+    return this.base + this.height + Math.sqrt(this.base ** 2 + this.height ** 2);
+  }
+}
+```
+
+We can then call the methods on the concrete classes to calculate the area and perimeter of each shape.
 
 ```typescript
 // Example usage
 const circle = new Circle(5);
 const rectangle = new Rectangle(6, 8);
+const triangle = new Triangle(3, 4);
 
 console.log(`Circle Area: ${circle.calculateArea()}`);
 console.log(`Rectangle Perimeter: ${rectangle.calculatePerimeter()}`);
+console.log(`Triangle Area: ${triangle.calculateArea()}`);
 ```
 
 ## ☯️ Pros and Cons

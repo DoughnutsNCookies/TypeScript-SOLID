@@ -1,82 +1,80 @@
 /**
  * Interface for shape calculations.
  */
-interface ShapeCalculator {
-  calculateArea(): number;
-  calculatePerimeter(): number;
-}
-
-/**
- * Concrete implementation for area calculation.
- */
-class AreaCalculator implements ShapeCalculator {
-  calculateArea(): number {
-    throw new Error("Method not implemented.");
-  }
-
-  calculatePerimeter(): number {
-    throw new Error("Method not implemented.");
-  }
-}
-
-/**
- * Concrete implementation for perimeter calculation.
- */
-class PerimeterCalculator implements ShapeCalculator {
-  calculateArea(): number {
-    throw new Error("Method not implemented.");
-  }
-
-  calculatePerimeter(): number {
-    throw new Error("Method not implemented.");
-  }
-}
-
-/**
- * Base class representing various geometric shapes.
- */
-class MyShape {
-  private calculator: ShapeCalculator;
-
-  constructor(calculator: ShapeCalculator) {
-    this.calculator = calculator;
-  }
-
-  calculateArea(): number {
-    return this.calculator.calculateArea();
-  }
-
-  calculatePerimeter(): number {
-    return this.calculator.calculatePerimeter();
-  }
+abstract class Shape {
+  abstract calculateArea(): number;
+  abstract calculatePerimeter(): number;
 }
 
 /**
  * Concrete class representing a circle.
  */
-class Circle extends MyShape {
+class Circle extends Shape {
   private radius: number;
 
-  constructor(radius: number, calculator: ShapeCalculator) {
-    super(calculator);
+  constructor(radius: number) {
+		super();
     this.radius = radius;
   }
 
-  // Additional methods and properties specific to circles can be added here.
+	calculateArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+
+  calculatePerimeter(): number {
+    return 2 * Math.PI * this.radius;
+  }
 }
 
 /**
  * Concrete class representing a rectangle.
  */
-class Rectangle extends MyShape {
+class Rectangle extends Shape {
   private width: number;
   private height: number;
 
-  constructor(width: number, height: number, calculator: ShapeCalculator) {
-    super(calculator);
+  constructor(width: number, height: number) {
+		super();
     this.width = width;
     this.height = height;
   }
 
-  // Additional methods and properties specific to rectangles can be added here.
+  calculateArea(): number {
+    return this.width * this.height;
+  }
+
+  calculatePerimeter(): number {
+    return 2 * (this.width + this.height);
+  }
 }
+
+/**
+ * Concrete class representing a triangle.
+ */
+class Triangle extends Shape {
+  private base: number;
+  private height: number;
+
+  constructor(base: number, height: number) {
+		super();
+    this.base = base;
+    this.height = height;
+  }
+
+  calculateArea(): number {
+    return 0.5 * this.base * this.height;
+  }
+
+  calculatePerimeter(): number {
+    return this.base + this.height + Math.sqrt(this.base ** 2 + this.height ** 2);
+  }
+}
+
+// Example usage
+const circle = new Circle(5);
+const rectangle = new Rectangle(6, 8);
+const triangle = new Triangle(3, 4);
+
+console.log(`Circle Area: ${circle.calculateArea()}`);
+console.log(`Rectangle Perimeter: ${rectangle.calculatePerimeter()}`);
+console.log(`Triangle Area: ${triangle.calculateArea()}`);
