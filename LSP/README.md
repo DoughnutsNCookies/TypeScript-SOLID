@@ -1,6 +1,6 @@
 # 🔒 Liskov Substitution Principle (LSP)
 
-The **Liskov Substitution Principle (LSP)** is a SOLID design principle that states that objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program. This principle ensures that the behavior specified for a base class is upheld by its derived classes, promoting a consistent and predictable usage of objects.
+The **Liskov Substitution Principle (LSP)** is a SOLID design principle that states that **objects of a superclass should be replaceable with objects of a subclass** without affecting the correctness of the program. This principle ensures that the behavior specified for a base class is upheld by its derived classes, promoting a consistent and predictable usage of objects.
 
 ## ❓ Problem
 
@@ -26,7 +26,6 @@ class Rectangle {
     console.log(`Drawing a rectangle with width ${this.width} and height ${this.height}`);
   }
 }
-
 ```
 
 Now, you decide to extend this system by introducing a derived class `Square` for square shapes. Since a square is a special case of a rectangle where the width and height are the same, you decide to make `Square` extend `Rectangle`.
@@ -42,13 +41,15 @@ class Square extends Rectangle {
 The issue arises when you try to use the `Square` class in a context where a `Rectangle` is expected. For example:
 
 ```typescript
-function printRectangleInfo(rectangle: Rectangle): void {
+function printShapeInfo(rectangle: Rectangle): void {
   console.log(`Area: ${rectangle.calculateArea()}`);
   rectangle.draw();
 }
 
+const rectangle = new Rectangle(5, 10);
+printShapeInfo(rectangle);
 const square = new Square(5);
-printRectangleInfo(square);
+printShapeInfo(square);
 ```
 
 While this seems reasonable at first, it violates the Liskov Substitution Principle. The `Square` class alters the behavior of the `Rectangle` class by enforcing equal width and height, potentially leading to unexpected results in a context where a general rectangle is expected.
@@ -64,11 +65,13 @@ A better design approach would be to create a common interface or abstract class
 Let's create an interface `Shape` that defines the common behavior for both rectangles and squares. Both `Rectangle` and `Square` can implement this interface, ensuring that they adhere to the same contract.
 
 ```typescript
+// Interface for geometric shapes
 interface Shape {
   calculateArea(): number;
   draw(): void;
 }
 
+// Rectangle class implementing the Shape interface
 class Rectangle implements Shape {
   protected width: number;
   protected height: number;
@@ -87,6 +90,7 @@ class Rectangle implements Shape {
   }
 }
 
+// Square class implementing the Shape interface
 class Square implements Shape {
   private sideLength: number;
 
@@ -104,19 +108,23 @@ class Square implements Shape {
 }
 ```
 
-Now, the `printRectangleInfo` function can be updated to accept any object that implements the `Shape` interface:
+Now, the `printShapeInfo` function can be updated to accept any object that implements the `Shape` interface:
 
 ```typescript
+// Function to print shape information
 function printShapeInfo(shape: Shape): void {
   console.log(`Area: ${shape.calculateArea()}`);
   shape.draw();
 }
 
+// Example usage with Square
+const rectangle = new Rectangle(5, 10);
+printShapeInfo(rectangle);
 const square = new Square(5);
 printShapeInfo(square);
 ```
 
-This modification ensures that both rectangles and squares can be used interchangeably without violating the Liskov Substitution Principle.
+This modification ensures that both rectangles and squares can be used **interchangeably without violating the Liskov Substitution Principle**.
 
 ## ☯️ Pros and Cons
 
