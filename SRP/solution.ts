@@ -1,6 +1,4 @@
-/**
- * Class responsible for reading and processing data from a file.
- */
+// Class responsible for reading and processing data from a file.
 class FileReaderProcessor {
   readAndProcess(filePath: string): string {
     // Logic for reading and processing data goes here.
@@ -10,9 +8,7 @@ class FileReaderProcessor {
   }
 }
 
-/**
- * Class responsible for saving processed data to a file.
- */
+// Class responsible for saving processed data to a file.
 class FileSaver {
   saveToFile(filePath: string, data: string): void {
     // Logic for saving data to a file goes here.
@@ -20,9 +16,7 @@ class FileSaver {
   }
 }
 
-/**
- * Class responsible for logging file operations.
- */
+// Class responsible for logging file operations.
 class FileLogger {
   logOperation(operation: string, filePath: string): void {
     // Logic for logging file operations goes here.
