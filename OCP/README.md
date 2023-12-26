@@ -1,12 +1,12 @@
 # 🔒 Open/Closed Principle (OCP)
 
-The **Open/Closed Principle (OCP)** is a SOLID design principle that states that a class should be **open for extension but closed for modification**. In other words, the behavior of a module can be extended without modifying its source code. This principle encourages developers to design software components that can be easily extended with new functionality without altering existing code.
+The **Open/Closed Principle (OCP)** states that a class should be **open for extension but closed for modification**. In other words, the behavior of a module can be extended without modifying its source code. This principle encourages developers to design software components that can be easily extended with new functionality without altering existing code.
 
 ## ❓ Problem
 
-Imagine you are developing a geometric shapes module that initially supports rectangles and circles. Each shape has methods to calculate its area and perimeter. However, as the project progresses, new shapes like triangles and ellipses need to be added.
+Imagine you are developing a geometric shapes module that initially supports rectangles and circles. Each shape has methods to calculate its area and perimeter. However, as the project progresses, a new shape like a triangle needs to be added.
 
-The initial implementation might involve a single class (`ShapeCalculator`) with methods for calculating the area and perimeter of rectangles and circles. This design makes it **challenging to add new shapes without modifying the existing class**, violating the Open/Closed Principle.
+The initial implementation might involve a single class `ShapeCalculator` with methods for calculating the area and perimeter of rectangles and circles. This design makes it **challenging to add new shapes without modifying the existing class**, violating the Open/Closed Principle.
 
 ```typescript
 class ShapeCalculator {
@@ -90,7 +90,7 @@ class Circle extends Shape {
     this.radius = radius;
   }
 
-	calculateArea(): number {
+  calculateArea(): number {
     return Math.PI * this.radius * this.radius;
   }
 
@@ -122,7 +122,7 @@ class Rectangle extends Shape {
 }
 ```
 
-Now, adding new shapes like triangles and ellipses is as simple as creating new subclasses of `Shape` without modifying the existing code.
+Now, adding a new shape like a triangle is as simple as creating new subclasses of `Shape` without modifying the existing code.
 
 ```typescript
 /**
