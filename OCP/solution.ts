@@ -1,14 +1,10 @@
-/**
- * Interface for shape calculations.
- */
+// Interface for shape calculations.
 abstract class Shape {
   abstract calculateArea(): number;
   abstract calculatePerimeter(): number;
 }
 
-/**
- * Concrete class representing a circle.
- */
+// Concrete class representing a circle.
 class Circle extends Shape {
   private radius: number;
 
@@ -26,9 +22,7 @@ class Circle extends Shape {
   }
 }
 
-/**
- * Concrete class representing a rectangle.
- */
+// Concrete class representing a rectangle.
 class Rectangle extends Shape {
   private width: number;
   private height: number;
@@ -48,9 +42,7 @@ class Rectangle extends Shape {
   }
 }
 
-/**
- * Concrete class representing a triangle.
- */
+// Concrete class representing a triangle.
 class Triangle extends Shape {
   private base: number;
   private height: number;

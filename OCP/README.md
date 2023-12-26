@@ -71,17 +71,13 @@ Applying the **Open/Closed Principle (OCP)** involves designing the system to be
 Let's create an abstract class `Shape` with methods for calculating the area and perimeter. We'll then create concrete subclasses for rectangles and circles. Later, we can easily add new shapes without modifying the existing code.
 
 ```typescript
-/**
- * Interface for shape calculations.
- */
+// Interface for shape calculations.
 abstract class Shape {
   abstract calculateArea(): number;
   abstract calculatePerimeter(): number;
 }
 
-/**
- * Concrete class representing a circle.
- */
+// Concrete class representing a circle.
 class Circle extends Shape {
   private radius: number;
 
@@ -99,9 +95,7 @@ class Circle extends Shape {
   }
 }
 
-/**
- * Concrete class representing a rectangle.
- */
+// Concrete class representing a rectangle.
 class Rectangle extends Shape {
   private width: number;
   private height: number;
@@ -125,9 +119,7 @@ class Rectangle extends Shape {
 Now, adding a new shape like a triangle is as simple as creating new subclasses of `Shape` without modifying the existing code.
 
 ```typescript
-/**
- * Concrete class representing a triangle.
- */
+// Concrete class representing a triangle.
 class Triangle extends Shape {
   private base: number;
   private height: number;
